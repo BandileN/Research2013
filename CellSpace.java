@@ -930,6 +930,10 @@ public class CellSpace extends JPanel
 			growGoodsBySeason();
 		else growGoods();
 		
+		//for the leave behind process
+		GoLconst.TEMP_TOTAL_SUGAR = getTotSugar();
+		GoLconst.TEMP_TOTAL_SPICE = getTotSpice();
+		
 		//Initialize Scoreboard Variables
 		setDistrChildAdultSenior(null, 0);
 		setDistrSeason(null, 0);
@@ -1026,7 +1030,7 @@ public class CellSpace extends JPanel
 				}
 				else
 				{
-					deathList.add(citizen);
+					deathList.add(citizen); //THIS METHOD SHOULD HAPPEN REGARDLESS OF ANYTHING
 					population--;
 				}
 				continue;
@@ -1041,8 +1045,11 @@ public class CellSpace extends JPanel
 				moveNGather( i, j, destinationI, destinationJ);
 			gatherTime += timeElapsed();
 
+			//INSERT GOVERNMENT TAXING CODE HERE.
+			
 			
 			//What the hell is this IF all about?
+			//Answer to above question: Basically if mating is switched on AND if and there are both males and females of mating age then...
 			if( GoLconst.INITIATE_MATING && ((GoLconst.MATING_FEMALE_MIN < GoLconst.MATING_MALE_MIN) ?
 			GoLconst.MATING_MALE_MIN < getTimePeriod() : GoLconst.MATING_FEMALE_MIN < getTimePeriod()) )
 			{
@@ -1158,7 +1165,11 @@ public class CellSpace extends JPanel
 				+ GoLconst.customFormat("###.##", postPollutant) + " Change = "
 				+ GoLconst.customFormat("###.##", initialPollutant-postPollutant) + "\n" );
 		}
-	
+		
+		//Gini code here
+		Government.calculate_Gini(zenList);
+		textArea.append("Sugar Gini : " + GoLconst.GINI_SUGAR + "   Spice Gini : " + GoLconst.GINI_SPICE + "\n");
+		
 		otherTime += timeElapsed();
 	}
 
@@ -1474,6 +1485,12 @@ public class CellSpace extends JPanel
 		}
 
 		// ***Move Citizen to new location**
+		//INSERT LEAVEBEHIND CODE HEAR.
+		if (GoLconst.LEAVE_BEHIND_ON){
+			float leave_behind_SU = (float) ((1/5)*Math.pow(((cell[fromI][fromJ].citizen.getSugar()*GoLconst.TEMP_POPULATION)/GoLconst.TEMP_TOTAL_SUGAR), 1.1));
+			float leave_behind_SP = (float) ((1/5)*Math.pow(((cell[fromI][fromJ].citizen.getSpice()*GoLconst.TEMP_POPULATION)/GoLconst.TEMP_TOTAL_SPICE), 1.1));
+		}
+		
 		cell[toI][toJ].citizen = cell[fromI][fromJ].citizen;
 		cell[fromI][fromJ].citizen = null;
 		cell[toI][toJ].citizen.setCol(toI);

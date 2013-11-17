@@ -474,6 +474,41 @@ public class GoLconst
 	public static boolean flagOutFileCreated = false;
 	public static int demoCntr = 0;
 	public static int timePeriod = 0;
+	
+	/**
+	 *Government tax rates
+	 *
+	 */
+	public static float FLAT_TAX_RATE = 0.1f;
+	public static float FLAT_TAX_THRESHOLD_SU = 20f;
+	public static float FLAT_TAX_THRESHOLD_SP = 20f;
+	
+	public static float B1_TAX_RATE = 0.18f;
+	public static float B2_TAX_RATE = 0.25f;
+	public static float B3_TAX_RATE = 0.30f;
+	public static float B4_TAX_RATE = 0.35f;
+	public static float B5_TAX_RATE = 0.38f;
+	public static float B6_TAX_RATE = 0.40f;
+	
+	public static float B1_MAX = 10f;
+	public static float B2_MAX = 50f;
+	public static float B3_MAX = 100f;
+	public static float B4_MAX = 150f;
+	public static float B5_MAX = 200f;
+	
+	/**
+	 * Gini Coefficients
+	 */
+	public static float GINI_SUGAR = 1.0f;
+	public static float GINI_SPICE = 1.0f;
+	
+	/**
+	 * Leave Behind temporary values
+	 */
+	public static boolean LEAVE_BEHIND_ON = false;
+	public static float TEMP_TOTAL_SUGAR = 0f;
+	public static float TEMP_TOTAL_SPICE = 0f;
+	public static int TEMP_POPULATION = 0;
 
 	/**
 	 * Default set of checks attempts to determine if default settings for variables are valid.
