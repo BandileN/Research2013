@@ -1044,8 +1044,6 @@ public class CellSpace extends JPanel
 			if( destinationI > -1 )
 				moveNGather( i, j, destinationI, destinationJ);
 			gatherTime += timeElapsed();
-
-			//INSERT GOVERNMENT TAXING CODE HERE.
 			
 			
 			//What the hell is this IF all about?
@@ -1122,6 +1120,13 @@ public class CellSpace extends JPanel
 					checkNTreat(citizen);
 				}
 			}
+			
+			//INSERT GOVERNMENT TAXING CODE HERE.
+			if (GoLconst.FLAT_TAX_ON && ((getTimePeriod()%10) == 0)){
+				Government.Flat_Taxation(citizen);
+			}else if(GoLconst.DYNAMIC_TAX_ON && ((getTimePeriod()%10)==0)){
+				Government.Dynamic_taxation(citizen);
+			}
 				
 			//Initialize Scoreboard Variables
 			setDistrChildAdultSenior(citizen, 1);
@@ -1166,10 +1171,21 @@ public class CellSpace extends JPanel
 				+ GoLconst.customFormat("###.##", initialPollutant-postPollutant) + "\n" );
 		}
 		
+		//equally distribute taxed sugar and spice;
+		if((getTimePeriod()%10) == 0){
+			Government.equal_distribution(zenList);
+		}
+		
 		//Gini code here
 		Government.calculate_Gini(zenList);
-		textArea.append("Sugar Gini : " + GoLconst.GINI_SUGAR + "   Spice Gini : " + GoLconst.GINI_SPICE + "\n");
-		
+		if((getTimePeriod()%10) == 0){
+			textArea.append("Sugar Gini : " + GoLconst.GINI_SUGAR + "   Spice Gini : " + GoLconst.GINI_SPICE + "\n");
+			textArea.append("Mean Sugar : " + totSugar/population + "   Mean Spice : " + totSpice/population + "\n");
+		}
+		if((getTimePeriod()%100) == 0){
+			textArea.append("Sugar Gini Ave : " + GoLconst.GINI_SUM_SU/getTimePeriod() + "   Spice Gini Ave : " + GoLconst.GINI_SUM_SP/getTimePeriod() + "\n");
+		}
+				
 		otherTime += timeElapsed();
 	}
 
@@ -1489,6 +1505,12 @@ public class CellSpace extends JPanel
 		if (GoLconst.LEAVE_BEHIND_ON){
 			float leave_behind_SU = (float) ((1/5)*Math.pow(((cell[fromI][fromJ].citizen.getSugar()*GoLconst.TEMP_POPULATION)/GoLconst.TEMP_TOTAL_SUGAR), 1.1));
 			float leave_behind_SP = (float) ((1/5)*Math.pow(((cell[fromI][fromJ].citizen.getSpice()*GoLconst.TEMP_POPULATION)/GoLconst.TEMP_TOTAL_SPICE), 1.1));
+			//leave sugar behind:
+			cell[fromI][fromJ].setSugar(cell[fromI][fromJ].getSugar() + leave_behind_SU);
+			cell[fromI][fromJ].citizen.setSugar(cell[fromI][fromJ].citizen.getSugar() - leave_behind_SU);
+			//leave spice behind
+			cell[fromI][fromJ].setSpice(cell[fromI][fromJ].getSpice() + leave_behind_SP);
+			cell[fromI][fromJ].citizen.setSpice(cell[fromI][fromJ].citizen.getSpice() - leave_behind_SP);
 		}
 		
 		cell[toI][toJ].citizen = cell[fromI][fromJ].citizen;

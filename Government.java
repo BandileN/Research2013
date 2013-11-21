@@ -4,90 +4,88 @@ import java.util.List;
 
 
 public class Government {
-	float sugar; //total sugar held by the government
-	float spice; //total spice held bythe government
-	float flat_tax_rate; //flat tax rate taken from each citizen
+	static float sugar = 0; //total sugar held by the government
+	static float spice = 0; //total spice held bythe government
 	
 	/*
 	 * Constructor method for government entity
 	 */
 	public Government(){
-		this.sugar = 0;
-		this.spice = 0;
-		this.flat_tax_rate = 0.1f;
+		sugar = 0;
+		spice = 0;
 	}
 	
-	public void Flat_Taxation(Citizen taxpayer){
+	public static void Flat_Taxation(Citizen taxpayer){
 		float payerSU = taxpayer.getSugar(), payerSP = taxpayer.getSpice();
 		//tax the sugar
 		if (payerSU > GoLconst.FLAT_TAX_THRESHOLD_SU){
-			this.sugar += (flat_tax_rate)*(payerSU);
-			taxpayer.setSugar(payerSU-((flat_tax_rate)*(payerSU)));
+			sugar += (GoLconst.FLAT_TAX_RATE)*(payerSU);
+			taxpayer.setSugar(payerSU-((GoLconst.FLAT_TAX_RATE)*(payerSU)));
 		}
 		//tax the spice
 		if (payerSP > GoLconst.FLAT_TAX_THRESHOLD_SP){
-			this.spice += (flat_tax_rate)*(payerSP);
-			taxpayer.setSpice(payerSP-((flat_tax_rate)*(payerSP)));
+			spice += (GoLconst.FLAT_TAX_RATE)*(payerSP);
+			taxpayer.setSpice(payerSP-((GoLconst.FLAT_TAX_RATE)*(payerSP)));
 		}
 	}
 	
-	public void dynamic_taxation(Citizen taxpayer){
+	public static void Dynamic_taxation(Citizen taxpayer){
 		float payerSU = taxpayer.getSugar(), payerSP = taxpayer.getSpice();
 		float taxed_amount;
 		//sugar taxation
 		if (payerSU <= GoLconst.B1_MAX){
-			this.sugar += (GoLconst.B1_TAX_RATE)*(payerSU);
+			sugar += (GoLconst.B1_TAX_RATE)*(payerSU);
 			taxpayer.setSugar(payerSU -((GoLconst.B1_TAX_RATE)*(payerSU)));
 		}else if ((GoLconst.B1_MAX < payerSU) && (payerSU <= GoLconst.B2_MAX)){
 			taxed_amount = (GoLconst.B1_TAX_RATE)*(GoLconst.B1_MAX) + ((GoLconst.B2_TAX_RATE)*(payerSU - GoLconst.B1_MAX));
-			this.sugar += taxed_amount;
+			sugar += taxed_amount;
 			taxpayer.setSugar(payerSU - taxed_amount);
 		}else if ((GoLconst.B2_MAX < payerSU) && (payerSU <= GoLconst.B3_MAX)){
 			taxed_amount = (GoLconst.B2_TAX_RATE)*(GoLconst.B2_MAX) + ((GoLconst.B3_TAX_RATE)*(payerSU - GoLconst.B2_MAX));
-			this.sugar += taxed_amount;
+			sugar += taxed_amount;
 			taxpayer.setSugar(payerSU - taxed_amount);
 		}else if ((GoLconst.B3_MAX < payerSU) && (payerSU <= GoLconst.B4_MAX)){
 			taxed_amount = (GoLconst.B3_TAX_RATE)*(GoLconst.B3_MAX) + ((GoLconst.B4_TAX_RATE)*(payerSU - GoLconst.B3_MAX));
-			this.sugar += taxed_amount;
+			sugar += taxed_amount;
 			taxpayer.setSugar(payerSU - taxed_amount);
 		}else if ((GoLconst.B4_MAX < payerSU) && (payerSU <= GoLconst.B5_MAX)){
 			taxed_amount = (GoLconst.B4_TAX_RATE)*(GoLconst.B4_MAX) + ((GoLconst.B5_TAX_RATE)*(payerSU - GoLconst.B4_MAX));
-			this.sugar += taxed_amount;
+			sugar += taxed_amount;
 			taxpayer.setSugar(payerSU - taxed_amount);
 		}else if (GoLconst.B5_MAX < payerSU){
 			taxed_amount = (GoLconst.B5_TAX_RATE)*(GoLconst.B5_MAX) + ((GoLconst.B6_TAX_RATE)*(payerSU - GoLconst.B5_MAX));
-			this.sugar += taxed_amount;
+			sugar += taxed_amount;
 			taxpayer.setSugar(payerSU - taxed_amount);
 		}
 		
 		//spice taxation
 		if (payerSP <= GoLconst.B1_MAX){
-			this.sugar += (GoLconst.B1_TAX_RATE)*(payerSP);
+			spice += (GoLconst.B1_TAX_RATE)*(payerSP);
 			taxpayer.setSpice(payerSP -((GoLconst.B1_TAX_RATE)*(payerSP)));
 		}else if ((GoLconst.B1_MAX < payerSP) && (payerSP <= GoLconst.B2_MAX)){
 			taxed_amount = (GoLconst.B1_TAX_RATE)*(GoLconst.B1_MAX) + ((GoLconst.B2_TAX_RATE)*(payerSP - GoLconst.B1_MAX));
-			this.sugar += taxed_amount;
+			spice += taxed_amount;
 			taxpayer.setSpice(payerSP - taxed_amount);
 		}else if ((GoLconst.B2_MAX < payerSP) && (payerSP <= GoLconst.B3_MAX)){
 			taxed_amount = (GoLconst.B2_TAX_RATE)*(GoLconst.B2_MAX) + ((GoLconst.B3_TAX_RATE)*(payerSP - GoLconst.B2_MAX));
-			this.sugar += taxed_amount;
+			spice += taxed_amount;
 			taxpayer.setSpice(payerSP - taxed_amount);
 		}else if ((GoLconst.B3_MAX < payerSP) && (payerSP <= GoLconst.B4_MAX)){
 			taxed_amount = (GoLconst.B3_TAX_RATE)*(GoLconst.B3_MAX) + ((GoLconst.B4_TAX_RATE)*(payerSP - GoLconst.B3_MAX));
-			this.sugar += taxed_amount;
+			spice += taxed_amount;
 			taxpayer.setSpice(payerSP - taxed_amount);
 		}else if ((GoLconst.B4_MAX < payerSP) && (payerSP <= GoLconst.B5_MAX)){
 			taxed_amount = (GoLconst.B4_TAX_RATE)*(GoLconst.B4_MAX) + ((GoLconst.B5_TAX_RATE)*(payerSP - GoLconst.B4_MAX));
-			this.sugar += taxed_amount;
+			spice += taxed_amount;
 			taxpayer.setSpice(payerSP - taxed_amount);
 		}else if (GoLconst.B5_MAX < payerSP){
 			taxed_amount = (GoLconst.B5_TAX_RATE)*(GoLconst.B5_MAX) + ((GoLconst.B6_TAX_RATE)*(payerSP - GoLconst.B5_MAX));
-			this.sugar += taxed_amount;
+			spice += taxed_amount;
 			taxpayer.setSpice(payerSP - taxed_amount);
 		}
 	}
 	
-	public void equal_distribution(List<Citizen> zenlist){
+	public static void equal_distribution(List<Citizen> zenlist){
 		float current_sugar, current_spice;
 		int current_population = zenlist.size();
 		float sugar_share = sugar/current_population;
@@ -98,12 +96,8 @@ public class Government {
 			zenlist.get(i).setSugar(current_sugar + sugar_share);
 			zenlist.get(i).setSpice(current_spice + spice_share);
 		}
-	}
-	
-	public void flattax_LB(){
-		
-	}
-	public void dynamictax_LB(){
+		sugar = 0f;
+		spice = 0f;
 		
 	}
 	public static void calculate_Gini(List<Citizen> zenlist){
@@ -128,5 +122,8 @@ public class Government {
 		}
 		GoLconst.GINI_SUGAR = (float) (1f/pop)*(pop + 1f - (2f*(num_sum_SU/den_sum_SU)));
 		GoLconst.GINI_SPICE = (float) (1f/pop)*(pop + 1f - (2f*(num_sum_SP/den_sum_SP)));
+		//will be averaged and shown after 500 cycles
+		GoLconst.GINI_SUM_SU += GoLconst.GINI_SUGAR;
+		GoLconst.GINI_SUM_SP += GoLconst.GINI_SPICE;
 	}
 }

@@ -172,7 +172,7 @@ public class GoLconst
 	 *  2 -> cultural group membership
 	 *  ....more can be added as required
 	 */
-	public static int CITIZEN_COLOR			= 2;
+	public static int CITIZEN_COLOR			= 1;
 	/** Determines RGB color value depicting senior citizens - pre/post child-bearing age */
 	public static int CITIZEN_COLOR_SENIOR	= 20;	//value applied to RGB parameters
 	public static int CITIZEN_COLOR_CHILD	= 250;
@@ -189,7 +189,7 @@ public class GoLconst
 	
 	//Sex & Sexual Reproduction Control Variables
 	/** ratio of females to males born */
-	public static float SEX_RATIO			= .5f;
+	public static float SEX_RATIO			= .49f;
 	/**
 	 * ratio of citizens that are risk-averse to risk-takers, influences trading strategy. 
 	 * 
@@ -479,10 +479,12 @@ public class GoLconst
 	 *Government tax rates
 	 *
 	 */
-	public static float FLAT_TAX_RATE = 0.1f;
+	public static boolean FLAT_TAX_ON = false;
+	public static float FLAT_TAX_RATE = 0.80f;
 	public static float FLAT_TAX_THRESHOLD_SU = 20f;
 	public static float FLAT_TAX_THRESHOLD_SP = 20f;
 	
+	public static boolean DYNAMIC_TAX_ON = true;
 	public static float B1_TAX_RATE = 0.18f;
 	public static float B2_TAX_RATE = 0.25f;
 	public static float B3_TAX_RATE = 0.30f;
@@ -490,17 +492,19 @@ public class GoLconst
 	public static float B5_TAX_RATE = 0.38f;
 	public static float B6_TAX_RATE = 0.40f;
 	
-	public static float B1_MAX = 10f;
-	public static float B2_MAX = 50f;
-	public static float B3_MAX = 100f;
-	public static float B4_MAX = 150f;
-	public static float B5_MAX = 200f;
+	public static float B1_MAX = 20f;
+	public static float B2_MAX = 40f;
+	public static float B3_MAX = 60f;
+	public static float B4_MAX = 80f;
+	public static float B5_MAX = 100f;
 	
 	/**
 	 * Gini Coefficients
 	 */
 	public static float GINI_SUGAR = 1.0f;
 	public static float GINI_SPICE = 1.0f;
+	public static float GINI_SUM_SU = 0.0f;
+	public static float GINI_SUM_SP = 0.0f;
 	
 	/**
 	 * Leave Behind temporary values
